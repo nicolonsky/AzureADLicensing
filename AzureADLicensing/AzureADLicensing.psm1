@@ -28,7 +28,7 @@ function Get-AADLicenseSku {
 function Get-AADGroupLicenseAssignment {
     [cmdletbinding()]
     param(
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, HelpMessage = "ID of the Azure AD group")]
         [String]$groupId
     )
 
@@ -63,11 +63,11 @@ function Add-AADGroupLicenseAssignment {
 
     [cmdletbinding()]
     param(
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, HelpMessage = "ID of the Azure AD group")]
         [String]$groupId,
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, HelpMessage = "License SKU to assign")]
         [String]$accountSkuId,
-        [Parameter()]
+        [Parameter(HelpMessage = "Excluded features for the specified SKU")]
         [String[]]$disabledServicePlans = @()
     )
 
@@ -118,11 +118,11 @@ function Update-AADGroupLicenseAssignment {
 
     [cmdletbinding()]
     param(
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, HelpMessage = "ID of the Azure AD group")]
         [String]$groupId,
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, HelpMessage = "License SKU to assign")]
         [String]$accountSkuId,
-        [Parameter()]
+        [Parameter(HelpMessage = "Excluded features for the specified SKU")]
         [String[]]$disabledServicePlans = @()
     )
 
@@ -149,10 +149,9 @@ function Update-AADGroupLicenseAssignment {
         $baseUrl = "https://main.iam.ad.ext.azure.com/api/"
 
         try {
+
             $response = Invoke-WebRequest -Method Post -Uri $($baseUrl + "AccountSkus/assign") -Headers $global:header -Body $requestBody
-
             $responseContent = $response | ConvertFrom-Json
-
             return $responseContent
         }
         catch {
@@ -172,12 +171,11 @@ function Remove-AADGroupLicenseAssignment {
 
     [cmdletbinding()]
     param(
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, HelpMessage = "ID of the Azure AD group")]
         [String]$groupId,
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, HelpMessage = "License SKU to remove")]
         [String]$accountSkuId
     )
-
     process {
 
         $licenceAssignmentConfig = @{
@@ -196,11 +194,11 @@ function Remove-AADGroupLicenseAssignment {
         $baseUrl = "https://main.iam.ad.ext.azure.com/api/"
 
         try {
+
             $response = Invoke-WebRequest -Method Post -Uri $($baseUrl + "AccountSkus/remove") -Headers $global:header -Body $requestBody
-
             $responseContent = $response | ConvertFrom-Json
-
             return $responseContent
+
         }
         catch {
 
@@ -225,12 +223,14 @@ function Test-AzureRmToken {
         $context = Get-AzureRmContext
         $tenantId = $context.Tenant.Id
         $refreshToken = @($context.TokenCache.ReadItems() | Where-Object { $_.tenantId -eq $tenantId -and $_.ExpiresOn -gt (Get-Date) })[0].RefreshToken
-        
+
         if ($refreshToken){
             return $refreshToken
         }
 
-    }catch{}
+    }catch{
+        #Nothing
+    }
 }
 function Get-AzureRmToken {
 
@@ -240,17 +240,18 @@ function Get-AzureRmToken {
     param()
 
     process {
-
         try {
 
             $refreshToken = Test-AzureRmToken
-            $context = Get-AzureRmContext
-            $tenantId = $context.Tenant.Id
 
             if ([string]::IsNullOrEmpty($refreshToken)){
-                Login-AzureRmAccount
+                $null = Connect-AzureRmAccount
                 $refreshToken = Test-AzureRmToken
             }
+
+            $context = Get-AzureRmContext
+            $tenantId = $context.Tenant.Id
+            $refreshToken = Test-AzureRmToken
 
             $body = "grant_type=refresh_token&refresh_token=$($refreshToken)&resource=74658136-14ec-4630-ad9b-26e160ff0fc6"
 
@@ -262,11 +263,8 @@ function Get-AzureRmToken {
                 'X-Requested-With'       = 'XMLHttpRequest'
                 'x-ms-client-request-id' = [guid]::NewGuid()
                 'x-ms-correlation-id'    = [guid]::NewGuid()
-            }
-
-            return $true
-
         }
+    }
         catch {
 
             Write-Error $_
