@@ -6,25 +6,25 @@ PowerShell Cmdlets to manage Azure AD Group based Licensing.
 
 ## Using the module
 
-1. Install-Module -Name AzureADLicensing, AzureRm
-2. Get-AzureRmToken
+1. ```Install-Module -Name AzureADLicensing, AzureRm```
+2. ```Get-AzureRmToken```
 
 ## Available commands
 
-Get available licenses:
-<pre>Get-AADLicenseSku</pre>
+Get available licenses and services:
+```Get-AADLicenseSku```
 
 Add new license assignment:
-<pre>Add-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c" -accountSkuId "nicolasuter:FLOW_FREE"</pre>
+```Add-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c" -accountSkuId "nicolasuter:FLOW_FREE"```
 
 Update license assignment:
-<pre>Update-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c" -accountSkuId "nicolasuter:FLOW_FREE"</pre>
+```Update-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c" -accountSkuId "nicolasuter:FLOW_FREE"```
 
 Remove license assignment:
-<pre>Remove-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c" -accountSkuId "nicolasuter:FLOW_FREE"</pre>
+```Remove-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c" -accountSkuId "nicolasuter:FLOW_FREE"```
 
 Get license assignments:
-<pre>Get-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c"</pre>
+```Get-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c"```
 
 Clear AzureRm context:
-<pre> Set-AzureRmContext -Context ([Microsoft.Azure.Commands.Profile.Models.PSAzureContext]::new()) </pre>
+```Set-AzureRmContext -Context ([Microsoft.Azure.Commands.Profile.Models.PSAzureContext]::new())```
