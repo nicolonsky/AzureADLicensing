@@ -6,8 +6,8 @@ PowerShell Cmdlets to manage Azure AD Group based Licensing.
 
 ## Using the module
 
-1. ```Install-Module -Name AzureADLicensing, AzureRm```
-2. ```Get-AzureRmToken```
+1. Install the module and dependencies: ```Install-Module -Name AzureADLicensing, AzureRm```
+2. Authenticate to Azure: ```Get-AzureRmToken```
 
 ## Available commands
 
