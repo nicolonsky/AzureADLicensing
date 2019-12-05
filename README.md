@@ -17,9 +17,10 @@ Get available licenses and services:
 
 Get included service plans for a license:
 
-```$m365= Get-AADLicenseSku | Where-Object {$_.name -match "Microsoft 365 E5"}
-$m365.serviceStatuses.servicePlan```
-
+<pre>
+$m365= Get-AADLicenseSku | Where-Object {$_.name -match "Microsoft 365 E5"}
+$m365.serviceStatuses.servicePlan
+</pre>
 
 Add new license assignment:
 
