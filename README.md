@@ -42,7 +42,3 @@ Remove license assignment:
 Get license assignments:
 
 ```Get-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c"```
-
-Clear AzureRm context:
-
-```Set-AzureRmContext -Context ([Microsoft.Azure.Commands.Profile.Models.PSAzureContext]::new())```
