@@ -14,7 +14,9 @@ PowerShell Cmdlets to manage Azure AD Group based Licensing.
 
 Get available licenses and services:
 
-```Get-AADLicenseSku```
+<pre>
+Get-AADLicenseSku
+</pre>
 
 Get included service plans for a license:
 
@@ -25,7 +27,9 @@ $m365.serviceStatuses.servicePlan
 
 Add new license assignment:
 
-```Add-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c" -accountSkuId "nicolasuter:FLOW_FREE"```
+<pre>
+Add-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c" -accountSkuId "nicolasuter:FLOW_FREE"
+</pre>
 
 Add license assignmnet with disabled plan:
 
@@ -41,4 +45,6 @@ Remove license assignment:
 
 Get license assignments:
 
-```Get-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c"```
+<pre>
+Get-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c"
+</pre>
