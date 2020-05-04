@@ -1,13 +1,13 @@
 # AzureADLicensing
 
-PowerShell Cmdlets to manage Azure AD Group based Licensing.
+PowerShell Cmdlets to manage Azure AD Group based licensing.
 
 [![PSGallery Version](https://img.shields.io/powershellgallery/v/AzureADLicensing.svg?style=flat-square&label=PSGallery%20Version)](https://www.powershellgallery.com/packages/AzureADLicensing) [![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/AzureADLicensing?style=flat-square&label=PSGallery%20Downloads)](https://www.powershellgallery.com/packages/AzureADLicensing)
 
 ## Using the module
 
 1. Install the module: ```Install-Module -Name AzureADLicensing -AllowClobber```
-2. If you hav the deprecated AzureRM module installed, uninstall it first ```Uninstall-AzureRm```
+2. If you have the deprecated AzureRM module installed, uninstall it first ```Uninstall-AzureRm```
 3. Authenticate to Azure: ```Get-AuthToken```
 
 ## Available commands
