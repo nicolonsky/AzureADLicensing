@@ -1,6 +1,6 @@
 # AzureADLicensing
 
-PowerShell Cmdlets to manage Azure AD Group based Licensing.
+PowerShell Cmdlets to manage Azure AD Group based licensing.
 
 [![PSGallery Version](https://img.shields.io/powershellgallery/v/AzureADLicensing.svg?style=flat-square&label=PSGallery%20Version)](https://www.powershellgallery.com/packages/AzureADLicensing) [![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/AzureADLicensing?style=flat-square&label=PSGallery%20Downloads)](https://www.powershellgallery.com/packages/AzureADLicensing)
 
