@@ -54,9 +54,12 @@ function Get-AADGroupLicenseAssignment {
                     $request = Invoke-WebRequest -Method Get -Uri $($baseUrl + "AccountSkus/GroupAssignments?accountSkuID=$($sku.accountSkuId)&nextLink=&searchText=&sortOrder=undefined") -Headers $(Get-AuthToken)
                     $requestContent = $request | ConvertFrom-Json
 
+                    $licensedGroups = $requestContent.items | Select-Object objectId, displayName
+
                     $rep += [PSCustomObject]@{
                         Name = $sku.Name
-                        LicensedGroups = $requestContent.items
+                        AccountSkuId = $sku.accountSkuId
+                        LicensedGroups = $licensedGroups
                     }
                 }
 
