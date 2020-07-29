@@ -43,8 +43,15 @@ Remove license assignment:
 
 <pre>Remove-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c" -accountSkuId "nicolasuter:FLOW_FREE"</pre>
 
-Get license assignments:
+Get license assignments for a specific group:
 
 <pre>
 Get-AADGroupLicenseAssignment -groupId "a5e95316-1c03-44d7-afac-efd0e788122c"
 </pre>
+
+Get all group based licensing assignments:
+
+<pre>
+Get-AADGroupLicenseAssignment -All
+</pre>
+

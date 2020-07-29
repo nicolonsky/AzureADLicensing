@@ -27,13 +27,17 @@ function Get-AADLicenseSku {
             }
         }
     }
-}           
+}          
 
 function Get-AADGroupLicenseAssignment {
     [cmdletbinding()]
     param(
-        [Parameter(Mandatory, HelpMessage = "ID of the Azure AD group")]
-        [String]$groupId
+        [Parameter(Mandatory, HelpMessage = "ID of the Azure AD group", ParameterSetName = "Single")]
+        [String]$groupId,
+
+        [Parameter(Mandatory, HelpMessage = "Retrieves all Group Based License Assignments", ParameterSetName = "All")]
+        [switch]
+        $All
     )
     process {
 
@@ -41,12 +45,28 @@ function Get-AADGroupLicenseAssignment {
 
         try {
 
-            $request = Invoke-WebRequest -Method Get -Uri $($baseUrl + "AccountSkus/Group/$groupId") -Headers $(Get-AuthToken)
+            if ($All.IsPresent) {
 
-            $requestContent = $request | ConvertFrom-Json
+                $accountSkus = Get-AADLicenseSku
+                $rep = @()
 
-            return $requestContent
+                foreach ($sku in $accountSkus){
+                    $request = Invoke-WebRequest -Method Get -Uri $($baseUrl + "AccountSkus/GroupAssignments?accountSkuID=$($sku.accountSkuId)&nextLink=&searchText=&sortOrder=undefined") -Headers $(Get-AuthToken)
+                    $requestContent = $request | ConvertFrom-Json
 
+                    $rep += [PSCustomObject]@{
+                        Name = $sku.Name
+                        LicensedGroups = $requestContent.items
+                    }
+                }
+
+                return $rep
+                
+            }else {
+                $request = Invoke-WebRequest -Method Get -Uri $($baseUrl + "AccountSkus/Group/$groupId") -Headers $(Get-AuthToken)
+                $requestContent = $request | ConvertFrom-Json
+                return $requestContent
+            }
         }
         catch {
             # convert the error message if it appears to be JSON
