@@ -33,7 +33,7 @@ function Get-AADGroupLicenseAssignment {
     [cmdletbinding()]
     param(
         [Parameter(Mandatory, HelpMessage = "ID of the Azure AD group", ParameterSetName = "Single")]
-        [String]$groupId,
+        [guid]$groupId,
 
         [Parameter(Mandatory, HelpMessage = "Retrieves all Group Based License Assignments", ParameterSetName = "All")]
         [switch]
@@ -94,7 +94,7 @@ function Add-AADGroupLicenseAssignment {
     [cmdletbinding()]
     param(
         [Parameter(Mandatory, HelpMessage = "ID of the Azure AD group")]
-        [String]$groupId,
+        [guid]$groupId,
         [Parameter(Mandatory, HelpMessage = "License SKU to assign")]
         [String]$accountSkuId,
         [Parameter(HelpMessage = "Excluded features for the specified SKU")]
@@ -152,7 +152,7 @@ function Update-AADGroupLicenseAssignment {
     [cmdletbinding()]
     param(
         [Parameter(Mandatory, HelpMessage = "ID of the Azure AD group")]
-        [String]$groupId,
+        [guid]$groupId,
         [Parameter(Mandatory, HelpMessage = "License SKU to assign")]
         [String]$accountSkuId,
         [Parameter(HelpMessage = "Excluded features for the specified SKU")]
@@ -208,7 +208,7 @@ function Remove-AADGroupLicenseAssignment {
     [cmdletbinding()]
     param(
         [Parameter(Mandatory, HelpMessage = "ID of the Azure AD group")]
-        [String]$groupId,
+        [guid]$groupId,
         [Parameter(Mandatory, HelpMessage = "License SKU to remove")]
         [String]$accountSkuId
     )
