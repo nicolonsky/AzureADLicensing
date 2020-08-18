@@ -1,0 +1,24 @@
+# AzureADLicensing PowerShell Module Build Pipeline
+
+trigger:
+- refs/tags/*
+
+pool:
+  vmImage: windows-latest
+
+steps:
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: |
+        Install-Module InvokeBuild -Force
+        Install-Module PowerShellGet -Force
+        Install-Module ModuleBuilder -Force
+        Install-Module Pester -Force
+
+        Invoke-Build
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'bin'
+      ArtifactName: 'AzureADLicensing-Module'
+      publishLocation: 'Container'
