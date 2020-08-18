@@ -2,14 +2,18 @@
 
 PowerShell cmdlets to manage Azure AD group based licensing. Cmdlets use the internal Azure portal API which is not supported by Microsoft.
 
-[![PSGallery Version](https://img.shields.io/powershellgallery/v/AzureADLicensing.svg?style=flat-square&label=PSGallery%20Version)](https://www.powershellgallery.com/packages/AzureADLicensing) [![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/AzureADLicensing?style=flat-square&label=PSGallery%20Downloads)](https://www.powershellgallery.com/packages/AzureADLicensing)
+[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/AzureADLicensing?label=PS%20Gallery%20Version&style=flat-square)](https://www.powershellgallery.com/packages/AzureADLicensing) [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/AzureADLicensing?label=PS%20Gallery%20downloads&style=flat-square)](https://www.powershellgallery.com/packages/AzureADLicensing) ![GitHub](https://img.shields.io/github/license/nicolonsky/AzureADLicensing?style=flat-square)
 
 ## Using the module
 
 1. Install the module: ```Install-Module -Name AzureADLicensing -AllowClobber```
-2. Authenticate to Azure: ```Connect-AzAccount```
+    1. If you have the deprecated AzureRM module installed, uninstall it first ```Uninstall-AzureRm```
+3. Authenticate to your Azure tenant: ```Connect-AzAccount```
+    1. Feel free to use a service principal for unattended authentication and automation
 
 ## Available commands
+
+All critical commands which modify settings support the `-WhatIf` parameter to predict changes.
 
 Get available licenses and services:
 
