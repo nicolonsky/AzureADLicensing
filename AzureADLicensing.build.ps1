@@ -55,10 +55,10 @@ task TestBuild {
         throw 'Tests failed'
     }
 
-    $CodeCoverageResult = $TestResult | Convert-CodeCoverage -SourceRoot "$PSScriptRoot\Source" -Relative
-    $CodeCoveragePercent = $TestResult.CodeCoverage.NumberOfCommandsExecuted/$TestResult.CodeCoverage.NumberOfCommandsAnalyzed*100 -as [int]
-    Write-Verbose -Message "CodeCoverage is $CodeCoveragePercent%" -Verbose
-    $CodeCoverageResult | Group-Object -Property SourceFile | Sort-Object -Property Count | Select-Object -Property Count, Name -Last 10
+    # $CodeCoverageResult = $TestResult | Convert-CodeCoverage -SourceRoot "$PSScriptRoot\Source" -Relative
+    # $CodeCoveragePercent = $TestResult.CodeCoverage.NumberOfCommandsExecuted/$TestResult.CodeCoverage.NumberOfCommandsAnalyzed*100 -as [int]
+    # Write-Verbose -Message "CodeCoverage is $CodeCoveragePercent%" -Verbose
+    # $CodeCoverageResult | Group-Object -Property SourceFile | Sort-Object -Property Count | Select-Object -Property Count, Name -Last 10
 }
 
 task . Clean, TestCode, Build
