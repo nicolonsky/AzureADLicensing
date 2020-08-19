@@ -43,7 +43,7 @@ stages:
               - task: ArchiveFiles@2
                 displayName: 'Zip module'
                 inputs:
-                  rootFolderOrFile: '$(System.DefaultWorkingDirectory)/mod/AzureADLicensing-Module/AzureADLicensing'
+                  rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/mod/AzureADLicensing-Module/AzureADLicensing'
                   archiveFile: '$(Build.ArtifactStagingDirectory)/AzureADLicensing.zip'
               - task: GitHubRelease@1
                 displayName: 'Create GitHub release'
