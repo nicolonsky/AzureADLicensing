@@ -43,7 +43,7 @@ stages:
               - task: ArchiveFiles@2
                 displayName: 'Zip module'
                 inputs:
-                  rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/mod/AzureADLicensing-Module/AzureADLicensing'
+                  rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/AzureADLicensing-Module/AzureADLicensing'
                   archiveFile: '$(Build.ArtifactStagingDirectory)/AzureADLicensing.zip'
               - task: GitHubRelease@1
                 displayName: 'Create GitHub release'
@@ -58,4 +58,4 @@ stages:
                   script: |
                     Install-Module Az.Accounts -Force
                     Publish-Module -Path ".\*\" -NuGetApiKey $env:NuGetApiKey
-                    workingDirectory: '$(System.DefaultWorkingDirectory)/mod/AzureADLicensing-Module/AzureADLicensing'
+                    workingDirectory: '$(Build.ArtifactStagingDirectory)/AzureADLicensing-Module/AzureADLicensing'
