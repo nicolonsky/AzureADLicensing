@@ -41,10 +41,13 @@ stages:
             deploy:
               steps:
               - task: ArchiveFiles@2
-                displayName: 'Zip module'
                 inputs:
-                  rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/AzureADLicensing-Module/AzureADLicensing'
+                  rootFolderOrFile: '$(Build.BinariesDirectory)/AzureADLicensing-Module/AzureADLicensing'
+                  includeRootFolder: true
+                  archiveType: 'zip'
                   archiveFile: '$(Build.ArtifactStagingDirectory)/AzureADLicensing.zip'
+                  replaceExistingArchive: true
+                  verbose: true
               - task: GitHubRelease@1
                 displayName: 'Create GitHub release'
                 inputs:
