@@ -42,7 +42,7 @@ stages:
               steps:
               - task: ArchiveFiles@2
                 inputs:
-                  rootFolderOrFile: '$(Build.BinariesDirectory)/AzureADLicensing-Module/AzureADLicensing'
+                  rootFolderOrFile: './AzureADLicensing-Module/AzureADLicensing'
                   includeRootFolder: true
                   archiveType: 'zip'
                   archiveFile: '$(Build.ArtifactStagingDirectory)/AzureADLicensing.zip'
