@@ -40,6 +40,13 @@ stages:
           runOnce:
             deploy:
               steps:
+              - task: DownloadBuildArtifacts@0
+                inputs:
+                  buildType: 'current'
+                  downloadType: 'single'
+                  artifactName: 'AzureADLicensing-Module'
+                  downloadPath: '$(System.ArtifactsDirectory)'
+              
               - task: ArchiveFiles@2
                 inputs:
                   rootFolderOrFile: '$(System.ArtifactsDirectory)/AzureADLicensing-Module/AzureADLicensing'
