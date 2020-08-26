@@ -5,8 +5,6 @@ trigger:
 
 variables:
   - group: NuGetApiKey
-  - name: NuGetApiKey
-    value: NuGetApiKey
 
 stages:
   - stage: Build
@@ -69,5 +67,7 @@ stages:
                   targetType: 'inline'
                   script: |
                     Install-Module Az.Accounts -Force
-                    Publish-Module -Path ".\*\" -NuGetApiKey $env:NuGetApiKey
-                    workingDirectory: '$(System.ArtifactsDirectory)/AzureADLicensing-Module/AzureADLicensing'
+                    Publish-Module -Path ".\*\" -NuGetApiKey $(NuGetApiKey)
+                  workingDirectory: '$(System.ArtifactsDirectory)/AzureADLicensing-Module/AzureADLicensing'
+                
+              
