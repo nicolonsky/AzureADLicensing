@@ -6,6 +6,7 @@ trigger:
 variables:
   - group: NuGetApiKey
   - name: NuGetApiKey
+    value: NuGetApiKey
 
 stages:
   - stage: Build
