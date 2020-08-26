@@ -71,5 +71,3 @@ stages:
                     Install-Module Az.Accounts -Force
                     Publish-Module -Path ".\*\" -NuGetApiKey $(NuGetApiKey)
                   workingDirectory: '$(System.ArtifactsDirectory)/$(moduleName)-Module/$(moduleName)'
-                
-              
