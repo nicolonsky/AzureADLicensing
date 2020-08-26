@@ -43,7 +43,7 @@ stages:
               - checkout: none
               - task: ArchiveFiles@2
                 inputs:
-                  rootFolderOrFile: '/AzureADLicensing-Module/AzureADLicensing'
+                  rootFolderOrFile: '$(System.ArtifactsDirectory)/AzureADLicensing-Module/AzureADLicensing'
                   includeRootFolder: true
                   archiveType: 'zip'
                   archiveFile: 'AzureADLicensing.zip'
@@ -62,4 +62,4 @@ stages:
                   script: |
                     Install-Module Az.Accounts -Force
                     Publish-Module -Path ".\*\" -NuGetApiKey $env:NuGetApiKey
-                    workingDirectory: '$(Build.ArtifactStagingDirectory)/AzureADLicensing-Module/AzureADLicensing'
+                    workingDirectory: '$(System.ArtifactsDirectory)/AzureADLicensing-Module/AzureADLicensing'
