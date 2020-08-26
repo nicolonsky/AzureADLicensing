@@ -5,6 +5,8 @@ trigger:
 
 variables:
   - group: NuGetApiKey
+  - name: 'moduleName'
+    value: 'contoso'
 
 stages:
   - stage: Build
@@ -26,7 +28,7 @@ stages:
         - task: PublishBuildArtifacts@1
           inputs:
             PathtoPublish: 'bin'
-            ArtifactName: 'AzureADLicensing-Module'
+            ArtifactName: '$(moduleName)-Module'
             publishLocation: 'Container'
 
   - stage: Deploy
@@ -45,14 +47,14 @@ stages:
                 inputs:
                   buildType: 'current'
                   downloadType: 'single'
-                  artifactName: 'AzureADLicensing-Module'
+                  artifactName: '$(moduleName)-Module'
                   downloadPath: '$(System.ArtifactsDirectory)'
               - task: ArchiveFiles@2
                 inputs:
-                  rootFolderOrFile: '$(System.ArtifactsDirectory)/AzureADLicensing-Module/AzureADLicensing'
+                  rootFolderOrFile: '$(System.ArtifactsDirectory)/$(moduleName)-Module/$(moduleName)'
                   includeRootFolder: true
                   archiveType: 'zip'
-                  archiveFile: 'AzureADLicensing.zip'
+                  archiveFile: '$(moduleName).zip'
                   replaceExistingArchive: true
                   verbose: true
               - task: GitHubRelease@1
@@ -68,6 +70,6 @@ stages:
                   script: |
                     Install-Module Az.Accounts -Force
                     Publish-Module -Path ".\*\" -NuGetApiKey $(NuGetApiKey)
-                  workingDirectory: '$(System.ArtifactsDirectory)/AzureADLicensing-Module/AzureADLicensing'
+                  workingDirectory: '$(System.ArtifactsDirectory)/$(moduleName)-Module/$(moduleName)'
                 
               
