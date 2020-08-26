@@ -3,22 +3,71 @@
 trigger:
 - refs/tags/*
 
-pool:
-  vmImage: windows-latest
+variables:
+  - group: NuGetApiKey
+  - name: 'moduleName'
+    value: 'AzureADLicensing'
 
-steps:
-  - task: PowerShell@2
-    inputs:
-      targetType: 'inline'
-      script: |
-        Install-Module InvokeBuild -Force
-        Install-Module PowerShellGet -Force
-        Install-Module ModuleBuilder -Force
-        Install-Module Pester -Force
+stages:
+  - stage: Build
+    jobs:
+      - job: Build
+        pool:
+          vmImage: 'windows-latest'
+        steps:
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: |
+              Install-Module InvokeBuild -Force
+              Install-Module PowerShellGet -Force
+              Install-Module ModuleBuilder -Force
+              Install-Module Pester -Force
 
-        Invoke-Build
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: 'bin'
-      ArtifactName: 'AzureADLicensing-Module'
-      publishLocation: 'Container'
+              Invoke-Build
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: 'bin'
+            ArtifactName: '$(moduleName)-Module'
+            publishLocation: 'Container'
+
+  - stage: Deploy
+    jobs:
+      - deployment: 'Deploy'
+        displayName: 'Publish to PSGallery and GitHub'
+        pool:
+          vmImage: 'windows-latest'
+        environment: 'production'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - checkout: none
+              - task: DownloadBuildArtifacts@0
+                inputs:
+                  buildType: 'current'
+                  downloadType: 'single'
+                  artifactName: '$(moduleName)-Module'
+                  downloadPath: '$(System.ArtifactsDirectory)'
+              - task: ArchiveFiles@2
+                inputs:
+                  rootFolderOrFile: '$(System.ArtifactsDirectory)/$(moduleName)-Module/$(moduleName)'
+                  includeRootFolder: true
+                  archiveType: 'zip'
+                  archiveFile: '$(moduleName).zip'
+                  replaceExistingArchive: true
+                  verbose: true
+              - task: GitHubRelease@1
+                displayName: 'Create GitHub release'
+                inputs:
+                  gitHubConnection: GitHub
+                  tagPattern: 'v*.*'
+                  assets: '*.zip'
+              - task: PowerShell@2
+                displayName: 'Publish to PowerShell Gallery'
+                inputs:
+                  targetType: 'inline'
+                  script: |
+                    Install-Module Az.Accounts -Force
+                    Publish-Module -Path ".\*\" -NuGetApiKey $(NuGetApiKey)
+                  workingDirectory: '$(System.ArtifactsDirectory)/$(moduleName)-Module/$(moduleName)'
