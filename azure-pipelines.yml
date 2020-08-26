@@ -48,10 +48,10 @@ stages:
                   downloadPath: '$(System.ArtifactsDirectory)'
               - task: ArchiveFiles@2
                 inputs:
-                  rootFolderOrFile: 'AzureADLicensing-Module/AzureADLicensing'
+                  rootFolderOrFile: '/AzureADLicensing-Module/AzureADLicensing'
                   includeRootFolder: true
                   archiveType: 'zip'
-                  archiveFile: '$(Build.ArtifactStagingDirectory)/AzureADLicensing.zip'
+                  archiveFile: 'AzureADLicensing.zip'
                   replaceExistingArchive: true
                   verbose: true
               - task: GitHubRelease@1
@@ -59,7 +59,7 @@ stages:
                 inputs:
                   gitHubConnection: GitHub
                   tagPattern: 'v*.*'
-                  assets: '$(Build.ArtifactStagingDirectory)/*.zip'
+                  assets: '*.zip'
               - task: PowerShell@2
                 displayName: 'Publish to PowerShell Gallery'
                 inputs:
