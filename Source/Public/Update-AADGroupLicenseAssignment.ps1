@@ -30,13 +30,15 @@ function Update-AADGroupLicenseAssignment {
             )
         }
 
+
+
         $requestBody = $licenceAssignmentConfig | ConvertTo-Json -Depth 5
         $baseUrl = "https://main.iam.ad.ext.azure.com/api/"
 
         if ($PSCmdlet.ShouldProcess($groupId, "Update license `"$accountSkuId`", disabled plans: `"$($disabledServicePlans -join `",`")`"")) {
             try {
 
-                $response = Invoke-WebRequest -Method Post -Uri $($baseUrl + "AccountSkus/assign") -Headers $(Get-AuthToken) -Body $requestBody -ErrorAction Stop
+                $response = Invoke-WebRequest -Method Post -Uri $($baseUrl + "AccountSkus/update") -Headers $(Get-AuthToken) -Body $requestBody -ErrorAction Stop
                 $responseContent = $response | ConvertFrom-Json
                 return $responseContent
             }
