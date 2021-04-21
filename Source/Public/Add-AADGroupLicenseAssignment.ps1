@@ -35,7 +35,7 @@ function Add-AADGroupLicenseAssignment {
 
         if ($PSCmdlet.ShouldProcess($groupId, "Update license `"$accountSkuId`", disabled plans: `"$($disabledServicePlans -join `",`")`"")) {
             try {
-                $response = Invoke-WebRequest -Method Post -Uri $($baseUrl + "AccountSkus/assign") -Headers $(Get-AuthToken) -Body $requestBody -ErrorAction Stop
+                $response = Invoke-WebRequest -Method Post -Uri $($baseUrl + "AccountSkus/assign") -Headers $(Get-AuthToken) -Body $requestBody -ErrorAction Stop -UseBasicParsing
                 $responseContent = $response | ConvertFrom-Json
                 return $responseContent
             }
